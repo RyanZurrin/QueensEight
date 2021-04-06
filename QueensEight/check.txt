@@ -1,0 +1,127 @@
+#pragma once
+
+const int SIZE = 8;
+
+struct QueensEight
+{
+	QueensEight();
+	bool isValid(int r, int c);
+	void queens8(int c);
+	void printBoard();
+	char board[SIZE][SIZE];
+	int solutions;
+	int moves;
+
+};
+
+inline QueensEight::QueensEight()
+{
+	solutions = 0;
+	moves = 0;
+	for (int r = 0; r < SIZE; r++)
+	{
+		for (int c = 0; c < SIZE; c++)
+		{
+			board[r][c] = '*';
+		}
+	}
+}
+
+/// <summary>
+/// Determines whether the specified move is indeed valid by checking that there
+/// is no queen in the column and then both diagonal directions. And if all is
+/// safe it returns true.
+/// </summary>
+/// <param name="arr">The arr.</param>
+/// <param name="row">The row.</param>
+/// <param name="col">The col.</param>
+/// <returns>
+///   <c>true</c> if the specified arr is valid; otherwise, <c>false</c>.
+/// </returns>
+inline bool QueensEight::isValid(int row, int col)
+{
+	// checking to see if there is already a queen in the column and if so
+	// returning false
+	for (int r = 0; r < row; r++)
+	{
+		if (board[r][col] == 'Q') {
+			return false;
+		}
+	}
+
+	// checking the diagonal and id there is a queen attacking return false. It
+	// does this by checking all the spaces looking for a queen in one of them.
+	for (int r = row, c= col; r >= 0 && c >= 0; r--, c--)
+	{
+		if (board[r][c] == 'Q') {
+			return false;
+		}
+	}
+
+	// checking the other diagonal and for a queen attacking and returning false
+	//if there so.
+	for (int r = row, c = col; r >= 0 && c < SIZE; r--, c++)
+	{
+		if (board[r][c] == 'Q') {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/// <summary>
+/// This is the recursive method to place the queens on the board row by row.
+/// Once it gets to row 8 it prints the board and then will backtrack to find
+/// additional solutions only ending when every single possible move has been
+/// made. It will discover 92 separate solutions taking 1951 in total to find
+/// them all
+/// </summary>
+/// <param name="row">The row to place a queen on.</param>
+inline void QueensEight::queens8(int row)
+{
+	int col = 0;
+	//if it makes it to the row of SIZE it means its placed queens in all the
+	// rows from 0 - 7 and therefore has finished placing all queens so print
+	// out the solution and work on the next
+	if (row == SIZE)
+	{
+		solutions++;
+		printBoard();
+		return;
+	}
+
+	//a loop to run a total of
+	while (col < SIZE)
+	{
+		// if no two queens threaten each other
+		if (isValid(row, col))
+		{
+			moves++;
+			// laying down the queen in her new home
+			board[row][col] = 'Q';
+
+			// recursive call to find a position in the next row that is free
+			queens8(row + 1);
+
+			// here is where the backtrack takes place, if it gets here it means
+			// its popped out of the queen8 call and needs to back up
+			board[row][col] = '*';
+		}
+		col++;
+	}
+}
+
+inline void QueensEight::printBoard()
+{
+	std::cout << std::endl;
+	std::cout << "moves: "<< moves << std::endl;
+	for (int i = 0; i < SIZE; i++)
+	{
+		for (int j = 0; j < SIZE; j++) {
+			std::cout << board[i][j]<<" ";
+		}
+		std::cout << std::endl;
+	}
+	std::cout << "Solution # " << solutions << std::endl;
+}

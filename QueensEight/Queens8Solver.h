@@ -1,7 +1,6 @@
-#pragma once
+#include <iostream>
+//#include "Queens8Solver.h"
 
-//This is the size of the board as a const int. This can be changed to solve
-//different size boards if so desired and it will still work fine.
 const int SIZE = 8;
 
 
@@ -10,9 +9,8 @@ const int SIZE = 8;
 /// a structure holding all the methods and variables needed to solve the queens
 /// eight puzzle.
 /// </summary>
-struct QueensEight
+static struct QueensEight
 {
-
 	QueensEight();
 	bool isValid(int r, int c);
 	void queens8(int c);
@@ -20,12 +18,18 @@ struct QueensEight
 	char board[SIZE][SIZE];
 	int solutions;
 	int moves;
-};
+}q8;
+
+int main()
+{
+	q8.queens8(0);
+	return  0;
+}//end main
 
 /// <summary>
 /// Initializes a new instance of the <see cref="QueensEight"/> struct.
 /// </summary>
-inline QueensEight::QueensEight()
+QueensEight::QueensEight()
 {
 	solutions = 0;
 	moves = 0;
@@ -48,7 +52,7 @@ inline QueensEight::QueensEight()
 /// <returns>
 ///   <c>true</c> if the specified arr is valid; otherwise, <c>false</c>.
 /// </returns>
-inline bool QueensEight::isValid(int row, int col)
+bool QueensEight::isValid(int row, int col)
 {
 	int r,c;
 	// checking to see if there is already a queen in the column and if so
@@ -98,7 +102,7 @@ inline bool QueensEight::isValid(int row, int col)
 /// find them all.
 /// </summary>
 /// <param name="col">The col to place a queen on.</param>
-inline void QueensEight::queens8(int col)
+void QueensEight::queens8(int col)
 {
 	int row = 0;
 	//if it makes it to the col of SIZE it means its placed queens in all the
@@ -133,7 +137,7 @@ inline void QueensEight::queens8(int col)
 	}
 }//end method queen8
 
-inline void QueensEight::printBoard()
+void QueensEight::printBoard()
 {
 	std::cout << std::endl;
 	std::cout << "moves: "<< moves << std::endl;

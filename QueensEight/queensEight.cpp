@@ -1,15 +1,31 @@
 #include <iostream>
+#include <stack>
 //#include "Queens8Solver.h"
 
 const int SIZE = 8;
 
+struct node
+{
+	int row;
+	int col;
+	node()
+	{
+		row = 0;
+		col = 0;
+	}
+	node(int r, int c)
+	{
+		row = r;
+		col = c;
+	}
+};
 
 
 /// <summary>
 /// a structure holding all the methods and variables needed to solve the queens
 /// eight puzzle.
 /// </summary>
-static struct QueensEight
+struct QueensEight
 {
 
 	QueensEight();
@@ -19,11 +35,13 @@ static struct QueensEight
 	char board[SIZE][SIZE];
 	int solutions;
 	int moves;
-}q8;
+	std::stack<node> prevMoves;
+};
 
 int main()
 {
 
+	QueensEight q8;
 	q8.queens8(0);
 	return  0;
 }
@@ -126,6 +144,9 @@ void QueensEight::queens8(int col)
 		{
 			// laying down the queen in her new home
 			board[row][col] = 'Q';
+			node saveMove(row, col);
+			//pushing move onto stack to save for recursive backtrack
+			prevMoves.push(saveMove);
 			//counting the total moves
 			moves++;
 			// recursive call to find a position in the next col that is free
@@ -133,7 +154,9 @@ void QueensEight::queens8(int col)
 
 			// this is where the backtrack takes place, if it gets here it means
 			// its popped out of the queen8 call and needs to back up
-			board[row][col] = '*';
+			node backUp = prevMoves.top();
+			prevMoves.pop();
+			board[backUp.row][backUp.col] = '*';
 		}
 		row++;
 	}
@@ -151,4 +174,4 @@ void QueensEight::printBoard()
 		std::cout << std::endl;
 	}
 	std::cout << "Solution # " << solutions << std::endl;
-}//end method printBoard
+}

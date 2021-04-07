@@ -141,9 +141,6 @@
   <ItemGroup>
     <ClCompile Include="queensEight.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Queens8Solver.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

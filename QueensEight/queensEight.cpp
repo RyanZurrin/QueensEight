@@ -9,7 +9,7 @@ const int SIZE = 8;
 /// a structure holding all the methods and variables needed to solve the queens
 /// eight puzzle.
 /// </summary>
-struct QueensEight
+static struct QueensEight
 {
 
 	QueensEight();
@@ -19,12 +19,12 @@ struct QueensEight
 	char board[SIZE][SIZE];
 	int solutions;
 	int moves;
-};
+}q8;
 
 int main()
 {
-	QueensEight solver;
-	solver.queens8(0);
+
+	q8.queens8(0);
 	return  0;
 }
 
